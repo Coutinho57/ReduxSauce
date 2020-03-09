@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Creators as TodoActions } from '../../../common/store/reducers/todos';
+import { Creators as ReposActions } from '../../common/store/reducers/repos';
 
 import './styles.css';
 
 export default function Dashboard() {
   const [user, setUser] = useState();
   const dispatch = useDispatch();
-  const todos = useSelector(state => state.todos);
+  const repos = useSelector(state => state.repos);
   function handleSubmit() {
-    // dispatch(TodoActions.addTodo(user));
-    dispatch(TodoActions.addRepo(user));
+    dispatch(ReposActions.addRepo(user));
   }
 
   return (
     <section>
       <form>
-        <input onChange={e => setUser(e.target.value)} />
+        <input onChange={el => setUser(el.target.value)} />
         <button onClick={() => handleSubmit()} type="button">
           Novo
         </button>
       </form>
 
       <ul>
-        {todos.map(repos => (
-          <li key={repos.id}>
-            {repos.complete ? <s>{repos.name}</s> : repos.name}
+        {repos.map(repo => (
+          <li key={repo.id}>
+            {repo.name}
             <div>
               <button
-                onClick={() => dispatch(TodoActions.removeRepo(repos.id))}
+                onClick={() => dispatch(ReposActions.removeRepo(repos.id))}
               >
                 Remove
               </button>
